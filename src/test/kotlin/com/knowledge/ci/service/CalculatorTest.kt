@@ -10,5 +10,6 @@ class CalculatorTest{
     fun testSum() {
         assertEquals(calculator.sum(2, 2), 4)
         assertEquals(calculator.sum(3, 3), 6)
+        assertEquals(calculator.sum(4, 4), 8)
     }
 }
