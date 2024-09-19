@@ -32,6 +32,8 @@ sonar {
 	properties {
 		property("sonar.projectKey", "ci-project")
 		property("sonar.projectName", "ci-project")
+//		property("sonar.host.url", "http://localhost:9000")
+//		property("sonar.token", "sqp_3efb60aa693ad213016d71874ae07dc6dbf043b0")
 	}
 }
 
