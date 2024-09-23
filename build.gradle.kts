@@ -4,6 +4,7 @@ plugins {
 	id("org.springframework.boot") version "3.3.3"
 	id("io.spring.dependency-management") version "1.1.6"
 	id("org.sonarqube") version "5.0.0.4638"
+	id("jacoco")
 }
 
 group = "com.knowledge"
@@ -28,14 +29,15 @@ dependencies {
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
-sonar {
-	properties {
-		property("sonar.projectKey", "ci-project")
-		property("sonar.projectName", "ci-project")
+//sonar {
+//	properties {
+//		property("sonar.projectKey", "ci-project")
+//		property("sonar.projectName", "ci-project")
 //		property("sonar.host.url", "http://localhost:9000")
-//		property("sonar.token", "sqp_3efb60aa693ad213016d71874ae07dc6dbf043b0")
-	}
-}
+//		property("sonar.token", "sqp_e26ee946250a3fb03b3fa7eaba2d55ec960ccb70")
+//		property("sonar.junit.reportPaths", "build/test-results/test")
+//	}
+//}
 
 kotlin {
 	compilerOptions {
