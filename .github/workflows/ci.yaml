@@ -35,5 +35,44 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build --no-daemon
 
-      - name: Run tests
-        run: ./gradlew test --no-daemon
+      - name: Run tests and generate JaCoCo coverage report
+        run: ./gradlew test jacocoTestReport --no-daemon
+
+      - name: Cache SonarQube packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+
+      - name: Build and analyze
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_ORG: ${{ secrets.SONAR_ORG }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+        run: ./gradlew build sonar --info
+
+  docker:
+    runs-on: ubuntu-latest
+    needs: build  # Esse job só será executado após o job de build
+
+    if: github.ref == 'refs/heads/main'  # Somente executa quando a branch é main
+
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build the Docker image
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/ci:latest .
+
+      - name: Push the Docker image
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/ci:latest
