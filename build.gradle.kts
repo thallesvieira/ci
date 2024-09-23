@@ -48,7 +48,8 @@ sonarqube {
 		property("sonar.projectKey", "ci")
 		property("sonar.organization", "thallesvieira")
 //		property("sonar.host.url", "https://sonarcloud.io")
-//		property("sonar.token", "9787d3f54a50b8d49eef4f79a0aca7790e715335")
+// 		property("sonar.token", "9787d3f54a50b8d49eef4f79a0aca7790e715335")
+		property("sonar.token", System.getenv("SONAR_TOKEN"))
 		property("sonar.coverage.jacoco.xmlReportPaths", "$buildDir/reports/jacoco/test/jacocoTestReport.xml")
 	}
 }
